@@ -49,25 +49,32 @@ int main(void) {
             case waitPress1:
                 turnOnLED(1);
                 break;
+                
             case debouncePress1:
                 delayMs(20);
                 state = waitRelease1;
                 break;
+                
             case waitRelease1:
                 break;
+                
             case debounceRelease1:
                 delayMs(20);
                 state = ledStop;
                 break;
+                
             case ledStop:
                 turnOnLED(2);
                 break;
+                
             case debouncePress2:
                 delayMs(20);
                 state = waitRelease2;
                 break;
+                
             case waitRelease2:
                 break;
+                
             case debounceRelease2:
                 delayMs(20);
                 state = waitPress1;
@@ -78,7 +85,7 @@ int main(void) {
     }
 }
 
-void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SRS) _CNInterrupt(void) {
+void __ISR(_CHANGE_NOTICE_VECTOR, IPL2SRS) _CNInterrupt(void) {
     //TODO: Implement the interrupt to capture the press of the button
     dummyVariable = PORTGbits.RG13 = 1;
     IFS1bits.CNGIF = 0;

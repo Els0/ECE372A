@@ -9,22 +9,24 @@
 #include "leds.h"
 
 #define OUTPUT 0
-#define INPUT 0
+#define INPUT 1
 
 void initLEDs() {
-    TRISGbits.TRISG12 = INPUT;
-    TRISGbits.TRISG14 = INPUT;
+    TRISGbits.TRISG12 = OUTPUT; // TRD1
+    TRISGbits.TRISG14 = OUTPUT; // TRD2
+    ODCGbits.ODCG12 = 1;
+    ODCGbits.ODCG14 = 1;
 }
 
 void turnOnLED(int led) {
     if (led == 1) {
-        //PORTGbits.RG12 = 0;
-        //TRISGbits.TRISG14 = OUTPUT;
         LATGbits.LATG12 = 1;
         LATGbits.LATG14 = 0;
+
     } 
     else if(led == 2) {
         LATGbits.LATG12 = 0;
         LATGbits.LATG14 = 1;
+
     }
 }
