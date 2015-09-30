@@ -6,7 +6,7 @@
  */
 
 #include <xc.h>
-#include "leds.h"
+//#include "leds.h"
 
 #define OUTPUT 0
 #define INPUT 1
@@ -16,17 +16,16 @@ void initLEDs() {
     TRISGbits.TRISG14 = OUTPUT; // TRD2
     ODCGbits.ODCG12 = 1;
     ODCGbits.ODCG14 = 1;
+    LATGbits.LATG12 = 0;
+    LATGbits.LATG14 = 1;
 }
 
-void turnOnLED(int led) {
-    if (led == 1) {
-        LATGbits.LATG12 = 1;
-        LATGbits.LATG14 = 0;
+void runLED() {
+    LATGbits.LATG12 = 1;
+    LATGbits.LATG14 = 0;
+}
 
-    } 
-    else if(led == 2) {
-        LATGbits.LATG12 = 0;
-        LATGbits.LATG14 = 1;
-
-    }
+void stopLED() {
+    LATGbits.LATG12 = 0;
+    LATGbits.LATG14 = 1;
 }

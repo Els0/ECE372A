@@ -40,7 +40,7 @@
 #pragma config FWDTWINSZ = WINSZ_25     // Watchdog Timer Window Size (Window Size is 25%)
 
 // DEVCFG0
-#pragma config DEBUG = OFF               // Background Debugger Enable (Debugger is Enabled)
+#pragma config DEBUG = ON               // Background Debugger Enable (Debugger is Enabled)
 #pragma config JTAGEN = ON              // JTAG Enable (JTAG Port Enabled)
 #pragma config ICESEL = ICS_PGx2        // ICE/ICD Comm Channel Select (Communicate on PGEC2/PGED2)
 #pragma config PWP = OFF                // Program Flash Write Protect (Disable)

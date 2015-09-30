@@ -9,7 +9,8 @@
 #define	LEDS_H
 
 void initLEDs();
-void turnOnLED(int led);
+void runLED();
+void stopLED();
 
 
 #endif	/* LEDS_H */

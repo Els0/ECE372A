@@ -33,69 +33,89 @@ unsigned int dummyVariable = 0;
  * the oscillator is now of a different frequency.
  */
 int main(void) {
-    //Enables interrupts
-    enableInterrupts();
     //Initialization of devices
-    initSwitch1();
+    initSW1();
     initLEDs();
     initTimer1();
+    
+    //Enables interrupts
+    enableInterrupts();
 
     while (1) {
-        //TODO: Using a finite-state machine, define the behavior of the LEDs
         //Debounce the switch
-        switch (state) {
-
-                //Turns led1 ON, and 2-3 OFF
+        /*switch (state) {
             case waitPress1:
-                turnOnLED(1);
                 break;
-                
             case debouncePress1:
-                delayMs(20);
                 state = waitRelease1;
                 break;
-                
             case waitRelease1:
                 break;
-                
             case debounceRelease1:
-                delayMs(20);
                 state = ledStop;
                 break;
-                
             case ledStop:
-                turnOnLED(2);
                 break;
-                
             case debouncePress2:
-                delayMs(20);
                 state = waitRelease2;
                 break;
-                
             case waitRelease2:
                 break;
-                
             case debounceRelease2:
-                delayMs(20);
                 state = waitPress1;
                 break;
+        }*/
+        switch (state) {
+            case waitPress1:
+                break;
+            case waitRelease1:
+                break;
+            case ledStop:
+                break;
+            case waitRelease2:
+                break;
         }
-
         return 0;
     }
 }
 
 void __ISR(_CHANGE_NOTICE_VECTOR, IPL2SRS) _CNInterrupt(void) {
-    //TODO: Implement the interrupt to capture the press of the button
     dummyVariable = PORTAbits.RA7 = 1;
-    IFS1bits.CNAIF = 0;
+    IFS1bits.CNAIF = 0;    
     if (state == waitPress1) {
-        state = debouncePress1;
-    } else if (state == waitRelease1) {
-        state = debounceRelease1;
-    } else if (state == ledStop) {
-        state = debouncePress2;
-    } else if (state == waitRelease2) {
-        state = debounceRelease2;
+        state = waitRelease1;
+        delayMs(20);
+    } 
+    else if (state == waitRelease1) {
+        state = ledStop;
+        stopLED();
+        delayMs(20);
+    } 
+    else if (state == ledStop) {
+        state = waitRelease2;
+        delayMs(20);
+    } 
+    else if (state == waitRelease2) {
+        state = waitPress1;
+        runLED();
+        delayMs(20);
     }
+    /*if (state == waitPress1) {
+        runLED();
+        state = debouncePress1;
+        delayMs(30);
+    } 
+    else if (state == waitRelease1) {
+        state = debounceRelease1;
+        delayMs(30);
+    } 
+    else if (state == ledStop) {
+        stopLED();
+        state = debouncePress2;
+        delayMs(30);
+    } 
+    else if (state == waitRelease2) {
+        state = debounceRelease2;
+        delayMs(30);
+    }*/
 }
