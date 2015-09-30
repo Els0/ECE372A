@@ -19,7 +19,6 @@ void initSW1(){
     CNENAbits.CNIEA7 = ENABLED;         // Enable pin CN
     CNPUAbits.CNPUA7 = ENABLED;         // Enable pull-up resistor
     IFS1bits.CNAIF = 0;                 // Put down the flag
-    IPC8bits.CNIP = 2;                  // Configure interrupt priority
-    IPC8bits.CNIS = 3;                  // Configure the interrupt sub-priority
+    IPC8bits.CNIP = 7;                  // Configure interrupt priority
     IEC1bits.CNAIE = ENABLED;           // Enable interrupt for D pins
 }

@@ -23,7 +23,7 @@ void initTimer1() {
 void delayMs(unsigned int delay){
     //TODO: Create a delay using timer 2 for "delay" microseconds.
     TMR1 = S_CLR;               //Clear TMR1
-    PR1 = delay * 6666;          //Period register, ms delay
+    PR1 = delay * 80;          //Period register, ms delay
     IFS0bits.T1IF = S_OFF;      //Put flag down
     T1CONbits.ON = S_ON;        //Turn timer on
     while (IFS0bits.T1IF == 0); //Wait for change

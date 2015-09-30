@@ -34,6 +34,8 @@ unsigned int dummyVariable = 0;
  */
 int main(void) {
     //Initialization of devices
+    SYSTEMConfigPerformance(80000000);
+    
     initSW1();
     initLEDs();
     initTimer1();
@@ -79,26 +81,26 @@ int main(void) {
     }
 }
 
-void __ISR(_CHANGE_NOTICE_VECTOR, IPL2SRS) _CNInterrupt(void) {
+void __ISR(_CHANGE_NOTICE_VECTOR, IPL7SRS) _CNInterrupt(void) {
     dummyVariable = PORTAbits.RA7 = 1;
     IFS1bits.CNAIF = 0;    
     if (state == waitPress1) {
         state = waitRelease1;
-        delayMs(20);
+        delayMs(700);
     } 
     else if (state == waitRelease1) {
         state = ledStop;
         stopLED();
-        delayMs(20);
+        delayMs(700);
     } 
     else if (state == ledStop) {
         state = waitRelease2;
-        delayMs(20);
+        delayMs(700);
     } 
     else if (state == waitRelease2) {
         state = waitPress1;
         runLED();
-        delayMs(20);
+        delayMs(700);
     }
     /*if (state == waitPress1) {
         runLED();
