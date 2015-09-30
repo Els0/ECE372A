@@ -1,6 +1,6 @@
 /* 
  * File:   interrupt.c
- * Author: TEAM 206
+ * Author: gvanhoy
  *
  * Created on August 27, 2015, 3:32 PM
  */

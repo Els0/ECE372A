@@ -87,8 +87,8 @@ int main(void) {
 
 void __ISR(_CHANGE_NOTICE_VECTOR, IPL2SRS) _CNInterrupt(void) {
     //TODO: Implement the interrupt to capture the press of the button
-    dummyVariable = PORTGbits.RG13 = 1;
-    IFS1bits.CNGIF = 0;
+    dummyVariable = PORTAbits.RA7 = 1;
+    IFS1bits.CNAIF = 0;
     if (state == waitPress1) {
         state = debouncePress1;
     } else if (state == waitRelease1) {
