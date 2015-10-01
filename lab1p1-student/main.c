@@ -49,26 +49,28 @@ int main(void) {
             case waitPress1:
                 break;
             case debouncePress1:
-                delayMs(700);
                 state = waitRelease1;
+                delayMs(700);
                 break;
             case waitRelease1:
+                toggleLED();
                 break;
             case debounceRelease1:
-                delayMs(700);
                 state = ledStop;
+                delayMs(700);
                 break;
             case ledStop:
                 break;
             case debouncePress2:
-                delayMs(700);
                 state = waitRelease2;
+                delayMs(700);
                 break;
             case waitRelease2:
+                toggleLED();
                 break;
             case debounceRelease2:
-                delayMs(700);
                 state = waitPress1;
+                delayMs(700);
                 break;
         }*/
         switch (state) {
@@ -87,14 +89,16 @@ int main(void) {
 
 void __ISR(_CHANGE_NOTICE_VECTOR, IPL7SRS) _CNInterrupt(void) {
     dummyVariable = PORTAbits.RA7 = 1;
-    IFS1bits.CNAIF = 0; 
+    IFS1bits.CNAIF = 0;
     /*if (state == waitPress1) {
+        toggleLED();
         state = debouncePress1;
     } 
     else if (state == waitRelease1) {
         state = debounceRelease1;
     } 
     else if (state == ledStop) {
+        toggleLED();
         state = debouncePress2;
     } 
     else if (state == waitRelease2) {
