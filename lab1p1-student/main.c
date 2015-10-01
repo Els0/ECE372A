@@ -49,21 +49,25 @@ int main(void) {
             case waitPress1:
                 break;
             case debouncePress1:
+                delayMs(700);
                 state = waitRelease1;
                 break;
             case waitRelease1:
                 break;
             case debounceRelease1:
+                delayMs(700);
                 state = ledStop;
                 break;
             case ledStop:
                 break;
             case debouncePress2:
+                delayMs(700);
                 state = waitRelease2;
                 break;
             case waitRelease2:
                 break;
             case debounceRelease2:
+                delayMs(700);
                 state = waitPress1;
                 break;
         }*/
@@ -83,14 +87,26 @@ int main(void) {
 
 void __ISR(_CHANGE_NOTICE_VECTOR, IPL7SRS) _CNInterrupt(void) {
     dummyVariable = PORTAbits.RA7 = 1;
-    IFS1bits.CNAIF = 0;    
+    IFS1bits.CNAIF = 0; 
+    /*if (state == waitPress1) {
+        state = debouncePress1;
+    } 
+    else if (state == waitRelease1) {
+        state = debounceRelease1;
+    } 
+    else if (state == ledStop) {
+        state = debouncePress2;
+    } 
+    else if (state == waitRelease2) {
+        state = debounceRelease2;
+    }*/
     if (state == waitPress1) {
         state = waitRelease1;
         delayMs(700);
     } 
     else if (state == waitRelease1) {
         state = ledStop;
-        stopLED();
+        toggleLED();
         delayMs(700);
     } 
     else if (state == ledStop) {
@@ -99,25 +115,7 @@ void __ISR(_CHANGE_NOTICE_VECTOR, IPL7SRS) _CNInterrupt(void) {
     } 
     else if (state == waitRelease2) {
         state = waitPress1;
-        runLED();
+        toggleLED();
         delayMs(700);
     }
-    /*if (state == waitPress1) {
-        runLED();
-        state = debouncePress1;
-        delayMs(30);
-    } 
-    else if (state == waitRelease1) {
-        state = debounceRelease1;
-        delayMs(30);
-    } 
-    else if (state == ledStop) {
-        stopLED();
-        state = debouncePress2;
-        delayMs(30);
-    } 
-    else if (state == waitRelease2) {
-        state = debounceRelease2;
-        delayMs(30);
-    }*/
 }

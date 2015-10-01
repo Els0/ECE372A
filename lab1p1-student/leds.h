@@ -11,6 +11,7 @@
 void initLEDs();
 void runLED();
 void stopLED();
+void toggleLED();
 
 
 #endif	/* LEDS_H */
