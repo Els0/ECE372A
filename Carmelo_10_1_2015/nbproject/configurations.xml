@@ -6,7 +6,6 @@
                    projectFiles="true">
       <itemPath>timer.h</itemPath>
       <itemPath>lcd.h</itemPath>
-      <itemPath>interrupt.h</itemPath>
       <itemPath>config.h</itemPath>
       <itemPath>interrupt2.h</itemPath>
     </logicalFolder>
@@ -19,7 +18,6 @@
                    projectFiles="true">
       <itemPath>timer.c</itemPath>
       <itemPath>lcd.c</itemPath>
-      <itemPath>interrupt.c</itemPath>
       <itemPath>main.c</itemPath>
       <itemPath>interrupt2.c</itemPath>
     </logicalFolder>
@@ -40,10 +38,10 @@
         <targetDevice>PIC32MX470F512L</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>PICkit3PlatformTool</platformTool>
+        <platformTool>PKOBSKDEPlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>1.40</languageToolchainVersion>
-        <platform>3</platform>
+        <platform>4</platform>
       </toolsSet>
       <compileType>
         <linkerTool>

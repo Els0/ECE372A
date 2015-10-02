@@ -12,13 +12,14 @@
 #include "lcd.h"
 #include "timer.h"
 #include "config.h"
-#include "interrupt.h"
+#include "interrupt2.h"
 
 
 // ******************************************************************************************* //
 
 int main(void)
 {
+    initLCD();
 
     while(1)
     {
