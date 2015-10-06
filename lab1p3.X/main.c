@@ -23,6 +23,9 @@ typedef enum stateTypeEnum {
 } stateType;
 
 volatile stateType state;
+volatile int milis;
+volatile int seconds;
+volatile int minutes;
 unsigned int dummyVariable = 0;
 
 // ******************************************************************************************* //
@@ -35,14 +38,13 @@ int main(void)
     initLEDs();
     initSWRESET();
     initSWSS();
-    initTimer1(); 
+    initTimer2(); 
     initLCD();
 
     while(1)
     {
         switch (state) {
             case Start:
-                //delayUs(20);
                 toggleLED();
                 break;
 
@@ -52,7 +54,6 @@ int main(void)
                 break;
 
             case WaitRelease1:
-                //delayUs(20);
                 break;
 
             case DebounceRelease1:
@@ -61,7 +62,6 @@ int main(void)
                 break;
 
             case ChangeLed:
-                //delayUs(20);
                 toggleLED();
                 break;
 
@@ -71,7 +71,6 @@ int main(void)
                 break;
 
             case WaitRelease2:
-                //delayUs(20);
                 break;
 
             case DebounceRelease2:
@@ -84,9 +83,18 @@ int main(void)
     return 0;
 }
 
-void __ISR(_TIMER_1_VECTOR, IPL3SRS) _TInterrupt(){
-    IFS0bits.T1IF = 0;
-    //counter = counter +1;
+void __ISR(_TIMER_2_VECTOR, IPL3SRS) _TInterrupt(){
+    IFS0bits.T2IF = 0;
+    milis+=milis;
+    if(milis==99){
+        seconds+=seconds;
+        milis=0;
+        if(seconds==60){
+            minutes=minutes;
+            seconds=0;
+        }
+    }
+    //Here the function to write minutes:seconds:milis
 }
 
 void __ISR(_CHANGE_NOTICE_VECTOR, IPL7SRS) _CNInterrupt( void ){
@@ -97,12 +105,14 @@ void __ISR(_CHANGE_NOTICE_VECTOR, IPL7SRS) _CNInterrupt( void ){
         state = DebouncePress1;
     } else 
     if (state == WaitRelease1) {
+        //T2CONbits.ON = 1;
         state = DebounceRelease1;
     } else 
     if (state == ChangeLed) {
         state = DebouncePress2;
     } else
     if (state == WaitRelease2) {
+        //T2CONbits.ON = 0;
         state = DebounceRelease2;
     }
 }

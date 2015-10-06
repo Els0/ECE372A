@@ -38,7 +38,7 @@ void writeFourBits(unsigned char word, unsigned int commandType, unsigned int de
 
 
     } else {
-
+        
         LCD_D4 = ((word & 0x10) >> 4); //D4 sending the rest 4 bits of the word(1 byte = 8 bits)
         LCD_D5 = ((word & 0x20) >> 5); //D5
         LCD_D6 = ((word & 0x40) >> 6); //D6
@@ -75,7 +75,7 @@ void initLCD(void) {
     TRIS_RS = OUTPUT; //
     TRIS_E = OUTPUT; // ************************
 
-    int i = 0; // Loop needed to make a diley of 1.64 ms
+    int i = 0; // Loop needed to make a delay of 1.64 ms
     for (i = 0; i < 100; i++) { //
         delayUs(150); //***********************
     }
@@ -112,7 +112,6 @@ void moveCursorLCD(unsigned char x, unsigned char y) {
 }
 
 void testLCD() {
-    initLCD();
     int i = 0;
     printCharLCD('c');
     for (i = 0; i < 1000; i++) delayUs(1000);
