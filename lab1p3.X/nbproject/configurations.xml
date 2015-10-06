@@ -10,6 +10,7 @@
       <itemPath>switchReset.h</itemPath>
       <itemPath>switchSS.h</itemPath>
       <itemPath>timer.h</itemPath>
+      <itemPath>leds.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -24,6 +25,7 @@
       <itemPath>switchReset.c</itemPath>
       <itemPath>switchSS.c</itemPath>
       <itemPath>timer.c</itemPath>
+      <itemPath>leds.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

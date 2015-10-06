@@ -43,7 +43,7 @@ int main(void)
         switch (state) {
             case Start:
                 //delayUs(20);
-                turnOnLED(1);
+                toggleLED();
                 break;
 
             case DebouncePress1:
@@ -62,7 +62,7 @@ int main(void)
 
             case ChangeLed:
                 //delayUs(20);
-                turnOnLED(2);
+                toggleLED();
                 break;
 
             case DebouncePress2:
