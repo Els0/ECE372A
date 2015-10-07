@@ -125,3 +125,11 @@ void testLCD() {
     for (i = 0; i < 1000; i++) delayUs(1000);
     clearLCD();
 }
+
+void getTimeString(unsigned int milis,unsigned int seconds, unsigned int minutes){
+    char* time1 =''+ minutes;
+    char* time2 =''+ seconds;
+    char* time3 =''+ milis;
+    char* times = time1 + ':' + time2 + ':' + time3;
+    printStringLCD(times)
+}
