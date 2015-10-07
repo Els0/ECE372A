@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=lab1p3.X
+PROJECTNAME=lab1p3.nadir
 
 # Active Configuration
 DEFAULTCONF=default

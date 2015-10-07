@@ -19,7 +19,7 @@
 
 typedef enum stateTypeEnum {
     Start, DebouncePress1, WaitRelease1, DebounceRelease1, DebouncePress2,
-    WaitRelease2, DebounceRelease2, ChangeLed, Running, Clear, Stopped, WaitPress1
+    WaitRelease2, DebounceRelease2, ChangeLed, Running, Clear, Stopped, WaitPress1, WaitPress2, Clear2
 } stateType;
 
 volatile stateType state;
@@ -29,25 +29,25 @@ volatile int minutes;
 unsigned int dummyVariable = 0;
 
 // ******************************************************************************************* //
+    
 int main(void)
 {
     SYSTEMConfigPerformance(40000000);
-    
-    state = Start;
-    enableInterrupts();
     initLEDs();
+    enableInterrupts();
     initSWRESET();
     initSWSS();
-    initTimer2(); 
-    //initLCD();
-    testLCD();
+    initTimer1();
+    initTimer2();
+    initLCD();
+    clearLCD();
 
     while(1)
     {
         switch (state) {
             case Start:
                 turnOnLED(1);
-                 stopLCD();
+                state = Clear;
                 break;
 
             case Clear:
@@ -64,7 +64,7 @@ int main(void)
                 break;    
                 
             case DebouncePress1:
-                delayUs(700);
+                delayUs2(700);
                 state = WaitRelease1;
                 break;
 
@@ -72,17 +72,30 @@ int main(void)
                 break;
 
             case DebounceRelease1:
-                delayUs(700);
+                delayUs2(700);
                 state = ChangeLed;
                 break;
 
             case ChangeLed:
                 turnOnLED(2);
-                runLCD();
+                state = Clear2;
                 break;
+                
+             case Clear2:
+                clearLCD();
+                state = Running;
+                break;
+                      
+            case Running:
+                runLCD();
+                state = WaitPress2;
+                break;    
+                
+             case WaitPress2:
+                break;  
 
             case DebouncePress2:
-                delayUs(700);
+                delayUs2(700);
                 state = WaitRelease2;
                 break;
 
@@ -90,7 +103,7 @@ int main(void)
                 break;
 
             case DebounceRelease2:
-                delayUs(700);
+                delayUs2(700);
                 state = Start;
                 break;
         }
@@ -102,7 +115,7 @@ int main(void)
 void __ISR(_TIMER_2_VECTOR, IPL3SRS) _TInterrupt(){
     IFS0bits.T2IF = 0;
     milis+=milis;
-    if(milis==99){
+    if(milis==100){
         seconds+=seconds;
         milis=0;
         if(seconds==60){
@@ -117,14 +130,14 @@ void __ISR(_CHANGE_NOTICE_VECTOR, IPL7SRS) _CNInterrupt( void ){
     //TODO: Implement the interrupt to capture the press of the button
       dummyVariable = PORTAbits.RA7 = 1;
       IFS1bits.CNAIF = 0;
-    if (state == Start) {
+    if (state == WaitPress1) {
         state = DebouncePress1;
     } else 
     if (state == WaitRelease1) {
         //T2CONbits.ON = 1;
         state = DebounceRelease1;
     } else 
-    if (state == ChangeLed) {
+    if (state == WaitPress2) {
         state = DebouncePress2;
     } else
     if (state == WaitRelease2) {
