@@ -88,6 +88,7 @@ void initLCD(void) {
     writeLCD(0x08, 0, 40);
     writeLCD(0x01, 0, 1640);
     writeLCD(0x06, 0, 40);
+    writeLCD(0x0C, 0, 40);
 }
 
 void printStringLCD(const char* s) {

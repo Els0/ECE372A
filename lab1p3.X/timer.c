@@ -24,6 +24,7 @@ void initTimer1(){
 }
 
 void delayUs(unsigned int delay){
+    if(delay==0)return;
     TMR1 = S_CLR;               //Clear TMR1
     PR1 = delay * 10;           //Period register, us delay ** NOTE change prescaler to 8
     IFS0bits.T1IF = S_OFF;      //Put flag down
@@ -46,6 +47,7 @@ void initTimer2(){
 void delayUs2(unsigned int delay){
     // Using timer 2, create a delay
     // that is delay amount of 1ms.
+    if(delay==0)return;
     TMR2 = S_CLR;                  //Clear TMR2
     PR2 = delay*80;                //Period register, us delay
     IFS0bits.T2IF = S_OFF;         //Put flag down
