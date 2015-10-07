@@ -88,13 +88,13 @@ void initLCD(void) {
     writeLCD(0x08, 0, 40);
     writeLCD(0x01, 0, 1640);
     writeLCD(0x06, 0, 40);
-    writeLCD(0x0C, 0, 40);
+    writeLCD(0x0E, 0, 40);
 }
 
 void printStringLCD(const char* s) {
     //Loop printing the first 8 bits of the char *s
     int i = 0;
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < strlen(s); i++)
         printCharLCD(s[i]);
 }
 
@@ -117,9 +117,11 @@ void testLCD() {
     printCharLCD('c');
     for (i = 0; i < 1000; i++) delayUs(1000);
     clearLCD();
+    for (i = 0; i < 1000; i++) delayUs(1000);
     printStringLCD("Hello!");
     moveCursorLCD(1, 2);
     for (i = 0; i < 1000; i++) delayUs(1000);
     printStringLCD("Hello!");
     for (i = 0; i < 1000; i++) delayUs(1000);
+    clearLCD();
 }
