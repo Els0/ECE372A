@@ -106,20 +106,20 @@ void __ISR(_CHANGE_NOTICE_VECTOR, IPL7SRS) _CNInterrupt(void) {
     }*/
     if (state == waitPress1) {
         state = waitRelease1;
-        delayMs(700);
+        delayUs(700);
     } 
     else if (state == waitRelease1) {
         state = ledStop;
         toggleLED();
-        delayMs(700);
+        delayUs(700);
     } 
     else if (state == ledStop) {
         state = waitRelease2;
-        delayMs(700);
+        delayUs(700);
     } 
     else if (state == waitRelease2) {
         state = waitPress1;
         toggleLED();
-        delayMs(700);
+        delayUs(700);
     }
 }

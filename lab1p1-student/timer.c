@@ -20,7 +20,7 @@ void initTimer1() {
     T1CONbits.ON = S_OFF;       //Turn timer off  
 }
 
-void delayMs(unsigned int delay){
+void delayUs(unsigned int delay){
     //TODO: Create a delay using timer 2 for "delay" microseconds.
     TMR1 = S_CLR;               //Clear TMR1
     PR1 = delay * 80;          //Period register, ms delay
