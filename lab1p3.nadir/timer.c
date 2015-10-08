@@ -17,7 +17,8 @@
 //Timer used to show the clock on the LCD
 void initTimer1() {
     TMR1 = S_CLR;               //Clear TMR1
-    T1CONbits.TCKPS = 1;        //Init pre-scaler 8
+    PR1 =  1570; 
+    T1CONbits.TCKPS = 3;        //Init pre-scaler 256
     T1CONbits.TCS = 0;          //Setting the oscillator
     IFS0bits.T1IF = S_OFF;      //Put the flag down
     IEC0bits.T1IE = S_ON;       //Enables the interrupt
@@ -27,16 +28,16 @@ void initTimer1() {
 
 
 
-void delayUs1(unsigned int delay){
+/*void delayUs1(unsigned int delay){
     //TODO: Create a delay using timer 2 for "delay" microseconds.
     if (delay == 0) return;
     TMR1 = S_CLR;               //Clear TMR1
-    PR1 = delay * 10;          //Period register, us delay ** NOTE change prescaler to 8
+    PR1 =  781;        //Period register, us delay ** NOTE change prescaler to 8,// prescaler at 256 for 1ms
     IFS0bits.T1IF = S_OFF;      //Put flag down
     T1CONbits.ON = S_ON;        //Turn timer on
     while (IFS0bits.T1IF == 0); //Wait for change
     T1CONbits.ON = S_OFF;       //Turn timer off
-}
+}*/
 
 
 //Timed used for every delay in the program

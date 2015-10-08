@@ -132,15 +132,59 @@ void testLCD() {
 void runLCD() {
     moveCursorLCD(0, 0);
     printStringLCD("Running");
-    moveCursorLCD(1, 2);
-    printStringLCD("Timer!");
+    moveCursorLCD(0, 2);
+    //printStringLCD("Timer!");
 }
 
 
 void stopLCD() {
     moveCursorLCD(0, 0);
     printStringLCD("Stopped");
-    moveCursorLCD(1, 2);
-    printStringLCD("Timer!");
+    moveCursorLCD(0, 2);
+    //printStringLCD("Timer!");
 
+}
+
+void getTimeString(unsigned int millis, unsigned int seconds, unsigned int minutes){
+    int i=0;
+    char min = (char)minutes;
+    char sec = (char)seconds;
+    char mil = (char)millis;
+    char times[80];
+    
+//    char *strcat(char *times, const char *min);
+//    //char *strcat(char *times,  ":");
+//    char *strcat(char *times, const char *sec);
+//    //char *strcat(char *times,  ":");
+//    char *strcat(char *times, const char *mil);
+
+    
+    //strcpy(times, min);
+    //strcat(times, sec);
+    //strcat(times, mil);
+ 
+    
+    //const char* times = ("<%s>:<%s>:<%s>", minutes, seconds, millis);
+    //char times = min+":"+sec+":"+mil;
+    
+    //char times = strncat(min,sec,mil);
+    //char* time = times;
+     //for (i = 0; i < 1000; i++) delayUs2(1000);
+    moveCursorLCD(0, 0);
+//    printCharLCD();
+    moveCursorLCD(0, 2);
+     //for (i = 0; i < 1000; i++) delayUs2(1000);
+//    printStringLCD(times);
+     //for (i = 0; i < 1000; i++) delayUs2(1000);
+
+    printCharLCD('0' + minutes/10);
+    printCharLCD('0' + minutes % 10);
+    printCharLCD(':');
+    printCharLCD('0' + seconds/10);
+    printCharLCD('0' + seconds % 10);
+    printCharLCD(':');
+    printCharLCD('0' + millis/10);
+    printCharLCD('0' + millis% 10);
+    printCharLCD(':');
+    
 }

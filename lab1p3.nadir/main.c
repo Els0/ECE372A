@@ -23,10 +23,11 @@ typedef enum stateTypeEnum {
 } stateType;
 
 volatile stateType state;
-volatile int milis;
-volatile int seconds;
-volatile int minutes;
+volatile int millis = 0;
+volatile int seconds = 0;
+volatile int minutes = 0;
 unsigned int dummyVariable = 0;
+unsigned int dummyVariable2 = 0;
 
 // ******************************************************************************************* //
     
@@ -58,9 +59,11 @@ int main(void)
             case Stopped:
                 stopLCD();
                 state = WaitPress1;
+                T1CONbits.ON = 0;
                 break;    
                 
             case WaitPress1:
+                getTimeString(millis, seconds, minutes);
                 break;    
                 
             case DebouncePress1:
@@ -89,6 +92,7 @@ int main(void)
             case Running:
                 runLCD();
                 state = WaitPress2;
+                T1CONbits.ON = 1;
                 break;    
                 
              case WaitPress2:
@@ -112,36 +116,44 @@ int main(void)
     return 0;
 }
 
-void __ISR(_TIMER_2_VECTOR, IPL3SRS) _TInterrupt(){
-    IFS0bits.T2IF = 0;
-    milis+=milis;
-    if(milis==100){
-        seconds+=seconds;
-        milis=0;
+void __ISR(_TIMER_1_VECTOR, IPL7SRS) _TInterrupt(){
+    IFS0bits.T1IF = 0;
+    millis+=1;
+    if(millis==100){
+        seconds+=1;
+        millis=0;
         if(seconds==60){
-            minutes=minutes;
+            minutes+=1;
             seconds=0;
         }
     }
-    //Here the function to write minutes:seconds:milis
+    
+    getTimeString(millis, seconds, minutes);
 }
 
 void __ISR(_CHANGE_NOTICE_VECTOR, IPL7SRS) _CNInterrupt( void ){
     //TODO: Implement the interrupt to capture the press of the button
       dummyVariable = PORTAbits.RA7 = 1;
-      IFS1bits.CNAIF = 0;
-    if (state == WaitPress1) {
+      dummyVariable2 = PORTDbits.RD6 = 1;
+      
+    if ( IFS0bits.T1IF == 1) {T1CONbits.ON = 0;}
+    if (state == WaitPress1 && IFS1bits.CNDIF==1 ) {
+        millis = 0;
+        seconds = 0;
+        minutes = 0;}
+      
+    if (state == WaitPress1 && IFS1bits.CNAIF == 1) {
         state = DebouncePress1;
     } else 
-    if (state == WaitRelease1) {
-        //T2CONbits.ON = 1;
+    if (state == WaitRelease1 && IFS1bits.CNAIF == 1) {
         state = DebounceRelease1;
     } else 
-    if (state == WaitPress2) {
+    if (state == WaitPress2 && IFS1bits.CNAIF == 1) {
         state = DebouncePress2;
     } else
-    if (state == WaitRelease2) {
-        //T2CONbits.ON = 0;
+    if (state == WaitRelease2 && IFS1bits.CNAIF == 1) {
         state = DebounceRelease2;
     }
+      IFS1bits.CNAIF = 0;
+      IFS1bits.CNDIF = 0;
 }
