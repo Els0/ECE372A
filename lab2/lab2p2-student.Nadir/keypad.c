@@ -37,6 +37,9 @@
 
 void initKeypad(void) {
 
+
+
+
     ROW1 = OUTPUT; //Setting the ports to OUTPUTs.
     ROW2 = OUTPUT; //
     ROW3 = OUTPUT; //  ODC
@@ -45,7 +48,23 @@ void initKeypad(void) {
     COL1 = INPUT; // Setting the ports to INPUTs.
     COL2 = INPUT; //  PULL UP RESISTORS
     COL3 = INPUT; //
-    
+
+    ANSELDbits.ANSD3=0;// to change to digital
+     // TRISDbits.TRISD6 = INPUT;           // Configure switch as input
+    CNCONDbits.ON = 1;                  // Enable overall interrupt
+    CNCONCbits.ON = 1;                  // Enable overall interrupt
+
+    CNENDbits.CNIED6 = ENABLED;         // Enable pin CN
+    CNENDbits.CNIED3 = ENABLED;
+    CNENCbits.CNIEC13 = ENABLED;
+   // CNPUDbits.CNPUD6 = ENABLED;         // Enable pull-up resistor
+    IFS1bits.CNDIF = 0;                 // Put down the flag
+    IFS1bits.CNCIF = 0;                 // Put down the flag
+
+    IPC8bits.CNIP = 7;                  // Configure interrupt priority
+    IEC1bits.CNDIE = ENABLED;
+    IEC1bits.CNCIE = ENABLED; //CN enable all above
+
     ODCGbits.ODCG13 = DISABLED;   //Disable the ODC at the outputs.
     ODCGbits.ODCG0 = DISABLED;
     ODCFbits.ODCF1 = DISABLED;
@@ -59,56 +78,56 @@ void initKeypad(void) {
  * the key that is pressed.
  */
 char scanKeypad(void){
-    char key = -1;
+    char key = '7';
     
     if (ODC1 == ENABLED) {
-        if (CNSTATDbits.CNSTATD6==1){
+        if (PORTDbits.RD6==1){ //use the port bits...cuz CNSTATD needs to be in the IRS
             key='1'; 
             return key;}
-        if (CNSTATCbits.CNSTATC13==1){
+        if (PORTCbits.RC13==1){  //CNSTATCbits.CNSTATC13==1
             key='2'; 
             return key;}
-        if (CNSTATDbits.CNSTATD3==1){
+        if (PORTDbits.RD3==1){
             key='3'; 
             return key;}
     }
     else 
     if (ODC2 == ENABLED) {
     
-        if (CNSTATDbits.CNSTATD6==1){
-            key='4'; 
+       if (PORTDbits.RD6==1){ //use the port bits...cuz CNSTATD needs to be in the IRS
+            key='4';
             return key;}
-        if (CNSTATCbits.CNSTATC13==1){
-            key='5'; 
+        if (PORTCbits.RC13==1){  //CNSTATCbits.CNSTATC13==1
+            key='5';
             return key;}
-        if (CNSTATDbits.CNSTATD3==1){
-            key='6'; 
+        if (PORTDbits.RD3==1){
+            key='6';
             return key;}
     }
     else
     if (ODC3 == ENABLED) {
     
-        if (CNSTATDbits.CNSTATD6==1){
-            key='7'; 
+        if (PORTDbits.RD6==1){ //use the port bits...cuz CNSTATD needs to be in the IRS
+            key='7';
             return key;}
-        if (CNSTATCbits.CNSTATC13==1){
-            key='8'; 
+        if (PORTCbits.RC13==1){  //CNSTATCbits.CNSTATC13==1
+            key='8';
             return key;}
-        if (CNSTATDbits.CNSTATD3==1){
-            key='9'; 
+        if (PORTDbits.RD3==1){
+            key='9';
             return key;}
     }
     else
     if (ODC4 == ENABLED) {
     
-        if (CNSTATDbits.CNSTATD6==1){
-            key='*'; 
+        if (PORTDbits.RD6==1){ //use the port bits...cuz CNSTATD needs to be in the IRS
+            key='*';
             return key;}
-        if (CNSTATCbits.CNSTATC13==1){
-            key='0'; 
+        if (PORTCbits.RC13==1){  //CNSTATCbits.CNSTATC13==1
+            key='0';
             return key;}
-        if (CNSTATDbits.CNSTATD3==1){
-            key='#'; 
+        if (PORTDbits.RD3==1){
+            key='#';
             return key;}
     }
 

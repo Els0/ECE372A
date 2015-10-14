@@ -56,7 +56,7 @@ void writeFourBits(unsigned char word, unsigned int commandType, unsigned int de
 
 void writeLCD(unsigned char word, unsigned int commandType, unsigned int delayAfter) {
 
-    writeFourBits(word, commandType, 1, 0); //Sending the uppper bits
+    writeFourBits(word, commandType, 0, 0); //Sending the uppper bits
     writeFourBits(word, commandType, delayAfter, 1); //Sending the lower bits
 
 
@@ -128,7 +128,7 @@ void testLCD() {
     clearLCD();
 }
 
-
+/*
 void runLCD() {
     moveCursorLCD(0, 0);
     printStringLCD("Running");
@@ -187,4 +187,4 @@ void getTimeString(unsigned int millis, unsigned int seconds, unsigned int minut
     printCharLCD('0' + millis% 10);
     printCharLCD(':');
     
-}
+}*/

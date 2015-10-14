@@ -15,7 +15,7 @@
 
 
 //Timer used to show the clock on the LCD
-void initTimer1() {
+/*void initTimer1() {
     TMR1 = S_CLR;               //Clear TMR1
     PR1 =  1570; 
     T1CONbits.TCKPS = 3;        //Init pre-scaler 256
@@ -26,7 +26,7 @@ void initTimer1() {
     T1CONbits.ON = S_OFF;       //Turn timer off
 }
 
-
+*/
 
 /*void delayUs1(unsigned int delay){
     //TODO: Create a delay using timer 2 for "delay" microseconds.
@@ -43,7 +43,7 @@ void initTimer1() {
 //Timed used for every delay in the program
 void initTimer2() {
     TMR2 = S_CLR;               //Clear TMR1
-    T2CONbits.TCKPS = 3;        //Init pre-scaler 8
+    T2CONbits.TCKPS = 6;        //Init pre-scaler 8
     T2CONbits.TCS = 0;          //Setting the oscillator
     IFS0bits.T2IF = S_OFF;      //Put the flag down
     T2CONbits.ON = S_OFF;       //Turn timer off

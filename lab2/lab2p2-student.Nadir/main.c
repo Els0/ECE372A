@@ -32,10 +32,12 @@ int main(void) {
 
     SYSTEMConfigPerformance(40000000);
     enableInterrupts();
-    initTimer1();
+    //initTimer1();
     initTimer2();
     initLCD();
     clearLCD();
+    initKeypad();
+    scanKeypad();
 
     while (1) {
         switch (state) {
@@ -45,8 +47,7 @@ int main(void) {
                 state = ROW1;
                 break;
 
-
-            case ROW1:
+              case ROW1:
                 ODCGbits.ODCG13 = ENABLED;
                 ODCDbits.ODCD12 = DISABLED;
                 delayUs2(1000);
@@ -100,16 +101,22 @@ int main(void) {
 void __ISR(_CHANGE_NOTICE_VECTOR, IPL7SRS) _CNInterrupt(void) {
     //TODO: Implement the interrupt to capture the press of the button
     char key;
-    dummyVariable = PORTDbits.RD6 = 1;
-    dummyVariable2 = PORTCbits.RC13 = 1;
-    dummyVariable3 = PORTDbits.RD3 = 1;
+    dummyVariable = PORTDbits.RD6; // change the value
+    dummyVariable2 = PORTCbits.RC13;
+    dummyVariable3 = PORTDbits.RD3;
     
    
  
         
     key=scanKeypad();
-    printCharLCD(key);
 
+    if(key!=-1){
+    printCharLCD(key);
+    IFS1bits.CNDIF = 0;
+    IFS1bits.CNCIF = 0;
+    }
+    else{
    IFS1bits.CNDIF = 0;
    IFS1bits.CNCIF = 0;
+    }
 }
