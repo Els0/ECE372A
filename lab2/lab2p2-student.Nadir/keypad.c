@@ -37,9 +37,6 @@
 
 void initKeypad(void) {
 
-
-
-
     ROW1 = OUTPUT; //Setting the ports to OUTPUTs.
     ROW2 = OUTPUT; //
     ROW3 = OUTPUT; //  ODC
@@ -50,25 +47,25 @@ void initKeypad(void) {
     COL3 = INPUT; //
 
     ANSELDbits.ANSD3=0;// to change to digital
-     // TRISDbits.TRISD6 = INPUT;           // Configure switch as input
+     
     CNCONDbits.ON = 1;                  // Enable overall interrupt
     CNCONCbits.ON = 1;                  // Enable overall interrupt
 
     CNENDbits.CNIED6 = ENABLED;         // Enable pin CN
     CNENDbits.CNIED3 = ENABLED;
     CNENCbits.CNIEC13 = ENABLED;
-   // CNPUDbits.CNPUD6 = ENABLED;         // Enable pull-up resistor
+   
     IFS1bits.CNDIF = 0;                 // Put down the flag
     IFS1bits.CNCIF = 0;                 // Put down the flag
 
     IPC8bits.CNIP = 7;                  // Configure interrupt priority
     IEC1bits.CNDIE = ENABLED;
-    IEC1bits.CNCIE = ENABLED; //CN enable all above
-
-    ODCGbits.ODCG13 = DISABLED;   //Disable the ODC at the outputs.
-    ODCGbits.ODCG0 = DISABLED;
-    ODCFbits.ODCF1 = DISABLED;
-    ODCDbits.ODCD12 = DISABLED;
+    IEC1bits.CNCIE = ENABLED;           //CN enable all above
+   
+    ODCGbits.ODCG13 = ENABLED;   //Enable the ODC at the outputs.
+    ODCGbits.ODCG0 =  ENABLED;
+    ODCFbits.ODCF1 =  ENABLED;
+    ODCDbits.ODCD12 = ENABLED;
 }
 
 /* This function will be called AFTER you have determined that someone pressed
@@ -77,57 +74,56 @@ void initKeypad(void) {
  * no key is pressed at all. Otherwise, it should return the ASCII character of
  * the key that is pressed.
  */
-char scanKeypad(void){
-    char key = '7';
+char scanKeypad(int Colk, int Rowk){
+    char key = -1;
+    int Col = Colk;
+    int Row = Rowk;
     
-    if (ODC1 == ENABLED) {
-        if (PORTDbits.RD6==1){ //use the port bits...cuz CNSTATD needs to be in the IRS
+    if (Row == 1) {
+        if (Col==1){
             key='1'; 
             return key;}
-        if (PORTCbits.RC13==1){  //CNSTATCbits.CNSTATC13==1
+        if (Col==2){
             key='2'; 
             return key;}
-        if (PORTDbits.RD3==1){
+        if (Col==3){
             key='3'; 
             return key;}
     }
     else 
-    if (ODC2 == ENABLED) {
-    
-       if (PORTDbits.RD6==1){ //use the port bits...cuz CNSTATD needs to be in the IRS
-            key='4';
+    if (Row == 2) {
+        if (Col==1){
+            key='4'; 
             return key;}
-        if (PORTCbits.RC13==1){  //CNSTATCbits.CNSTATC13==1
-            key='5';
+        if (Col==2){
+            key='5'; 
             return key;}
-        if (PORTDbits.RD3==1){
-            key='6';
-            return key;}
-    }
-    else
-    if (ODC3 == ENABLED) {
-    
-        if (PORTDbits.RD6==1){ //use the port bits...cuz CNSTATD needs to be in the IRS
-            key='7';
-            return key;}
-        if (PORTCbits.RC13==1){  //CNSTATCbits.CNSTATC13==1
-            key='8';
-            return key;}
-        if (PORTDbits.RD3==1){
-            key='9';
+        if (Col==3){
+            key='6'; 
             return key;}
     }
     else
-    if (ODC4 == ENABLED) {
-    
-        if (PORTDbits.RD6==1){ //use the port bits...cuz CNSTATD needs to be in the IRS
-            key='*';
+    if (Row == 3) {
+        if (Col==1){
+            key='7'; 
             return key;}
-        if (PORTCbits.RC13==1){  //CNSTATCbits.CNSTATC13==1
-            key='0';
+        if (Col==2){
+            key='8'; 
             return key;}
-        if (PORTDbits.RD3==1){
-            key='#';
+        if (Col==3){
+            key='9'; 
+            return key;}
+    }
+    else
+   if (Row == 4) {
+        if (Col==1){
+            key='*'; 
+            return key;}
+        if (Col==2){
+            key='0'; 
+            return key;}
+        if (Col==3){
+            key='#'; 
             return key;}
     }
 

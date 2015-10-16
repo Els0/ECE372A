@@ -10,7 +10,7 @@
 
 
 void initKeypad(void);
-char scanKeypad(void);
+char scanKeypad(int Colk, int Rowk);
 
 #endif	/* KEYPAD_H */
 

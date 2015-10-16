@@ -43,7 +43,7 @@
 //Timed used for every delay in the program
 void initTimer2() {
     TMR2 = S_CLR;               //Clear TMR1
-    T2CONbits.TCKPS = 6;        //Init pre-scaler 8
+    T2CONbits.TCKPS = 3;        //Init pre-scaler 8
     T2CONbits.TCS = 0;          //Setting the oscillator
     IFS0bits.T2IF = S_OFF;      //Put the flag down
     T2CONbits.ON = S_OFF;       //Turn timer off
