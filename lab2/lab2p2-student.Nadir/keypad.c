@@ -6,15 +6,6 @@
  * resistors. Don't forget about other considerations...
  */
 
-/*
-#define LCD_D4  LATEbits.LATE7  // LCD_ D4 = LATEbits and are use for the pins
-#define LCD_D5  LATEbits.LATE5  //
-#define LCD_D6  LATEbits.LATE3  //
-#define LCD_D7  LATEbits.LATE1  //
-#define LCD_RS  LATCbits.LATC4 //
-#define LCD_E   LATCbits.LATC2  //**************************
-*/
-
 #define ROW1  TRISGbits.TRISG13       // Set them as an output
 #define ROW2  TRISGbits.TRISG0        //
 #define ROW3  TRISFbits.TRISF1        // ODC
@@ -24,7 +15,7 @@
 #define COL2  TRISCbits.TRISC13       //
 #define COL3  TRISDbits.TRISD3        // PULL UP RESISTORS
 
-#define ODC1 ODCGbits.ODCG13   //Disable the ODC at the outputs.
+#define ODC1 ODCGbits.ODCG13          //Define the ODC at the outputs.
 #define ODC2 ODCGbits.ODCG0 
 #define ODC3 ODCFbits.ODCF1 
 #define ODC4 ODCDbits.ODCD12 
@@ -37,17 +28,17 @@
 
 void initKeypad(void) {
 
-    ROW1 = OUTPUT; //Setting the ports to OUTPUTs.
-    ROW2 = OUTPUT; //
-    ROW3 = OUTPUT; //  ODC
-    ROW4 = OUTPUT; //
+    ROW1 = OUTPUT;                      //  Setting the ports to OUTPUTs.
+    ROW2 = OUTPUT;                      //
+    ROW3 = OUTPUT;                      //  ODC
+    ROW4 = OUTPUT;                      //
 
-    COL1 = INPUT; // Setting the ports to INPUTs.
-    COL2 = INPUT; //  PULL UP RESISTORS
-    COL3 = INPUT; //
+    COL1 = INPUT;                       //  Setting the ports to INPUTs.
+    COL2 = INPUT;                       //  PULL UP RESISTORS
+    COL3 = INPUT;                       //
 
-    ANSELDbits.ANSD3=0;// to change to digital
-     
+    ANSELDbits.ANSD3=0;                 // to change to digital
+    
     CNCONDbits.ON = 1;                  // Enable overall interrupt
     CNCONCbits.ON = 1;                  // Enable overall interrupt
 
@@ -62,7 +53,7 @@ void initKeypad(void) {
     IEC1bits.CNDIE = ENABLED;
     IEC1bits.CNCIE = ENABLED;           //CN enable all above
    
-    ODCGbits.ODCG13 = ENABLED;   //Enable the ODC at the outputs.
+    ODCGbits.ODCG13 = ENABLED;          //Enable the ODC at the outputs.
     ODCGbits.ODCG0 =  ENABLED;
     ODCFbits.ODCF1 =  ENABLED;
     ODCDbits.ODCD12 = ENABLED;
@@ -74,15 +65,15 @@ void initKeypad(void) {
  * no key is pressed at all. Otherwise, it should return the ASCII character of
  * the key that is pressed.
  */
-char scanKeypad(int Colk, int Rowk){
+char scanKeypad(int Colk, int Rowk){            
     char key = -1;
-    int Col = Colk;
-    int Row = Rowk;
+    int Col = Colk;                             //Initialize the variables with the values passed when
+    int Row = Rowk;                             //the function is called from main.c
     
-    if (Row == 1) {
-        if (Col==1){
-            key='1'; 
-            return key;}
+    if (Row == 2) {                             //Depending on the row that was pressed, and the
+        if (Col==1){                            //column that was pressed, this function returns a  
+            key='1';                            //key value, for example if Row 2 was pressed, and
+            return key;}                        //column 3 was pressed, the returned key value is "3".
         if (Col==2){
             key='2'; 
             return key;}
@@ -90,8 +81,8 @@ char scanKeypad(int Colk, int Rowk){
             key='3'; 
             return key;}
     }
-    else 
-    if (Row == 2) {
+  
+    if (Row == 3) {
         if (Col==1){
             key='4'; 
             return key;}
@@ -102,8 +93,8 @@ char scanKeypad(int Colk, int Rowk){
             key='6'; 
             return key;}
     }
-    else
-    if (Row == 3) {
+   
+    if (Row == 4) {
         if (Col==1){
             key='7'; 
             return key;}
@@ -114,8 +105,8 @@ char scanKeypad(int Colk, int Rowk){
             key='9'; 
             return key;}
     }
-    else
-   if (Row == 4) {
+    
+   if (Row == 1) {
         if (Col==1){
             key='*'; 
             return key;}
