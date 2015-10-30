@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=interrupt.c main.c lcd.c timer.c ADC.c PWM.c
+SOURCEFILES_QUOTED_IF_SPACED=interrupt.c main.c lcd.c timer.c ADC.c PWM.c switch.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/interrupt.o ${OBJECTDIR}/main.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/timer.o ${OBJECTDIR}/ADC.o ${OBJECTDIR}/PWM.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/interrupt.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/lcd.o.d ${OBJECTDIR}/timer.o.d ${OBJECTDIR}/ADC.o.d ${OBJECTDIR}/PWM.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/interrupt.o ${OBJECTDIR}/main.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/timer.o ${OBJECTDIR}/ADC.o ${OBJECTDIR}/PWM.o ${OBJECTDIR}/switch.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/interrupt.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/lcd.o.d ${OBJECTDIR}/timer.o.d ${OBJECTDIR}/ADC.o.d ${OBJECTDIR}/PWM.o.d ${OBJECTDIR}/switch.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/interrupt.o ${OBJECTDIR}/main.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/timer.o ${OBJECTDIR}/ADC.o ${OBJECTDIR}/PWM.o
+OBJECTFILES=${OBJECTDIR}/interrupt.o ${OBJECTDIR}/main.o ${OBJECTDIR}/lcd.o ${OBJECTDIR}/timer.o ${OBJECTDIR}/ADC.o ${OBJECTDIR}/PWM.o ${OBJECTDIR}/switch.o
 
 # Source Files
-SOURCEFILES=interrupt.c main.c lcd.c timer.c ADC.c PWM.c
+SOURCEFILES=interrupt.c main.c lcd.c timer.c ADC.c PWM.c switch.c
 
 
 CFLAGS=
@@ -130,6 +130,12 @@ ${OBJECTDIR}/PWM.o: PWM.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/PWM.o 
 	@${FIXDEPS} "${OBJECTDIR}/PWM.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/PWM.o.d" -o ${OBJECTDIR}/PWM.o PWM.c   
 	
+${OBJECTDIR}/switch.o: switch.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/switch.o.d 
+	@${RM} ${OBJECTDIR}/switch.o 
+	@${FIXDEPS} "${OBJECTDIR}/switch.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/switch.o.d" -o ${OBJECTDIR}/switch.o switch.c   
+	
 else
 ${OBJECTDIR}/interrupt.o: interrupt.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -166,6 +172,12 @@ ${OBJECTDIR}/PWM.o: PWM.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/PWM.o.d 
 	@${RM} ${OBJECTDIR}/PWM.o 
 	@${FIXDEPS} "${OBJECTDIR}/PWM.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/PWM.o.d" -o ${OBJECTDIR}/PWM.o PWM.c   
+	
+${OBJECTDIR}/switch.o: switch.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/switch.o.d 
+	@${RM} ${OBJECTDIR}/switch.o 
+	@${FIXDEPS} "${OBJECTDIR}/switch.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/switch.o.d" -o ${OBJECTDIR}/switch.o switch.c   
 	
 endif
 

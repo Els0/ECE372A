@@ -14,6 +14,8 @@ extern "C" {
 
 void initPWM();
 void initPWM2();
+void initHBridgeInputs();
+void ToggleMode(int CurrentState);
 
 #ifdef	__cplusplus
 }

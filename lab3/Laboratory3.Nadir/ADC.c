@@ -18,7 +18,7 @@ void initADC(){
     AD1CON2bits.SMPI = 15; // 15 burritos de chilorio
     AD1CON2bits.ALTS = 0; // Only Mux A
     AD1CON3bits.ADRC = 0; // Use PBCLK
-    AD1CON3bits.SAMC = 2; // 2 Tad per sample
+    AD1CON3bits.SAMC = 30; // 2 Tad per sample
     AD1CON3bits.ADCS = 0xFF; // 512 times the PBCLK
     AD1CHSbits.CH0NA = 0; // Use Vref- as negative reference
     AD1CHSbits.CH0SA = 0; // Scan AN0 at least

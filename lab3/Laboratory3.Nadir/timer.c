@@ -14,7 +14,7 @@
 #define S_OFF 0
 #define S_CLR 0
 
-void initTimer1() {
+/*void initTimer1() {
     TMR2 = S_CLR;               //Clear TMR1
     T2CONbits.TCKPS = 3;        //Init pre-scaler 8
     T2CONbits.TCS = 0;          //Setting the oscillator
@@ -33,7 +33,7 @@ void delayUs(unsigned int delay){
     T2CONbits.ON = S_ON;        //Turn timer on
     while (IFS0bits.T2IF == 0); //Wait for change
     T2CONbits.ON = S_OFF;       //Turn timer off
-}
+}*/
 ///////////////////////////////////
 //////////////////////////////////
 ///////TESTS////////////////////////
@@ -44,7 +44,7 @@ void delayUs(unsigned int delay){
 //Puede que se haga un desmadre mezclando estos timers c: asi que quizas se tenga que cambiar para utilizar el timer 1 y 2 para el control, y el timer 3 para todo el resto del desmadre de delays y la madre alv.
 //Timer1 used for all the other delays.
 
-/*void initTimer1() {
+void initTimer1() {
     TMR1 = S_CLR;               //Clear TMR1
     T1CONbits.TCKPS = 1;        //Init pre-scaler 8
     T1CONbits.TCS = 0;          //Setting the oscillator
@@ -74,15 +74,16 @@ void delayUs(unsigned int delay){
 void initTimer2(){
     TMR2 = 0;
     PR2 = 1023;
-    T2CONbits.TCKPS = 0;
-    T2CONbits.TCS = 0;
-    T2CONbits.ON = 1;
+    T2CONbits.TCKPS = 0;        //Init pre-scaler 
+    T2CONbits.TCS = S_OFF;      //Setting the oscillator
+    T2CONbits.ON = S_ON;       //Turn timer on
 }
 
 //Uses timer 2
-void delayUs2(unsigned int delay){
+/*void delayUs2(unsigned int delay){
     TMR1 = 0;
-    PR1 = 5*delay;
+    PR1 = 1023;
+    //PR1 = 5*delay;
     IFS0bits.T2IF = 0;
     T1CONbits.TCKPS = 1;
     disableInterrupts();
