@@ -52,21 +52,3 @@ void delayUs2(unsigned int delay){
     T1CONbits.TON = 0;
     enableInterrupts();
 }
-
-void initTimer3() {
-    TMR3 = S_CLR;               //Clear TMR1
-    T3CONbits.TCKPS = 3;        //Init pre-scaler 8
-    T3CONbits.TCS = 0;          //Setting the oscillator
-    IFS0bits.T3IF = S_OFF;      //Put the flag down
-    T3CONbits.ON = S_OFF;       //Turn timer off
-}
-
-void delayUs3(unsigned int delay){
-    if (delay == 0) return;
-    TMR3 = S_CLR;               //Clear TMR1
-    PR3 = delay * 10;          //Period register, us delay ** NOTE change prescaler to 8
-    IFS0bits.T3IF = S_OFF;      //Put flag down
-    T3CONbits.ON = S_ON;        //Turn timer on
-    while (IFS0bits.T3IF == 0); //Wait for change
-    T3CONbits.ON = S_OFF;       //Turn timer off
-}

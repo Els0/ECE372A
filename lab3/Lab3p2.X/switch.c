@@ -4,7 +4,6 @@
  *
  */
 
-//#include <proc/p32mx470f512l.h>
 #include <xc.h>
 
 #define INPUT 1
