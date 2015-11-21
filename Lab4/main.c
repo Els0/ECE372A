@@ -22,7 +22,7 @@ typedef enum stateTypeEnum {
     Forward, Idle, Turn_Left, Turn_Right, Turn_Left2, Turn_Right2, Ramp_Down, Ramp_Up,  Finish, WaitPress, DebouncePress, DebounceRelease, WaitRelease
 } stateType;
 
-volatile stateType state = Idle;
+volatile stateType state = Turn_Right;
 unsigned int dummyVariable = 0;
 unsigned int dummyVariable2 = 0;
 int S0=0;
@@ -61,28 +61,28 @@ int main(void){
                  AD1CON1bits.ADON = 1;
                 break;
 
-            case Turn_Left:
+            case Turn_Right:
                 ToggleMode(5);
                 AD1CON1bits.ADON = 1;
                 break;
 
-            case Turn_Right:
+            case Turn_Left:
                 ToggleMode(4);
                 AD1CON1bits.ADON = 1;
                 break;
                 
-            case Turn_Left2:        
+            case Turn_Right2:        
                 i=0;
                 ToggleMode(5);
-                AD1CON1bits.ADON = 1;
                 for (i = 0; i < 1000; i++) delayUs(1000);
+                AD1CON1bits.ADON = 1;
                 break;
 
-            case Turn_Right2:
+            case Turn_Left2:
                 i=0;
                 ToggleMode(4);
+                for (i = 0; i < 1000; i++) delayUs(1000);                
                 AD1CON1bits.ADON = 1;
-                for (i = 0; i < 1000; i++) delayUs(1000);
                 break;
             
             case DebouncePress:
@@ -120,47 +120,51 @@ void __ISR(_ADC_VECTOR, IPL7SRS) _ADCInterrupt(void){
     IFS0bits.AD1IF = 0;   
     
     //Buffer from Sensor 0 mayor de .600v
-    if (ADC1BUF0<=122) {S0=1;} 
+    if (ADC1BUF0<=150) {S0=1;} 
     else {S0=0;}
      
     //Buffer from Sensor 1 mayor de .300
-    if (ADC1BUF1<=62) {S1=1;} 
+    if (ADC1BUF1<=100) {S1=1;} 
     else {S1=0;}
     
     //Buffer from Sensor 2 mayor de .800
-    if (ADC1BUF2<=164) {S2=1;} 
+    if (ADC1BUF2<=200) {S2=1;} 
     else {S2=0;}
     
     //Buffer from Sensor 3 mayor de .600
-    if (ADC1BUF3<=122) {S3=1;} 
+    if (ADC1BUF3<=200) {S3=1;} 
     else {S3=0;}
     
     //State Selector
     if ((S0==0)&&(S1==1)&&(S2==1)&&(S3==0)){state=Forward;}
     else
-       if ((S0==0)&&(S1==0)&&(S2==1)&&(S3==0)){state=Turn_Right;} 
+       if ((S0==1)&&(S1==1)&&(S2==1)&&(S3==1)){state=Forward;} 
        else
-           if ((S0==0)&&(S1==1)&&(S2==0)&&(S3==0)){state=Turn_Left;}
+           if ((S0==1)&&(S1==1)&&(S2==0)&&(S3==0)){state=Turn_Left;}
            else
-               if ((S0==0)&&(S1==0)&&(S2==0)&&(S3==0)){state=Turn_Right;}
+               if ((S0==1)&&(S1==0)&&(S2==0)&&(S3==0)){state=Turn_Left;}
                else
-                   if ((S0==1)&&(S1==1)&&(S2==1)&&(S3==1)){state=Forward;}
+                   if ((S0==0)&&(S1==1)&&(S2==0)&&(S3==0)){state=Turn_Left;}
                    else
-                       if ((S0==0)&&(S1==1)&&(S2==1)&&(S3==1)){state=Turn_Right2;}
+                       if ((S0==0)&&(S1==1)&&(S2==1)&&(S3==1)){state=Turn_Right;}
                        else
-                           if ((S0==1)&&(S1==1)&&(S2==1)&&(S3==0)){state=Turn_Left2;}
-                           else
-                               if ((S0==0)&&(S1==0)&&(S2==0)&&(S3==0)){state=Idle;}
+                           if ((S0==0)&&(S1==0)&&(S2==0)&&(S3==1)){state=Turn_Right;}
+                             else
+                                if ((S0==0)&&(S1==0)&&(S2==1)&&(S3==0)){state=Turn_Right;}
+                                     else
+                                        if ((S0==0)&&(S1==0)&&(S2==0)&&(S3==0)){state=Turn_Right;}
+                                else state=Forward;
     
       
-    OC4RS = 1023;
-    OC2RS = 1023;
+    OC4RS = 800;
+    OC2RS = 800;
     //Assign the correct values for the motor to work to the OCxRS variables.
     //OC2RS = ADC1BUF0+400;
     //if(ADC1BUF0 < 512) {OC4RS = 1023;}
     //else {OC4RS = ((-1023+ADC1BUF0)*(-1))+(400);}
 
     AD1CON1bits.ADON = 0;               //Turns off the ADC.
+    //for (i = 0; i < 100; i++) delayUs(1000);
 }
 
 void __ISR(_CHANGE_NOTICE_VECTOR, IPL7SRS) _CNInterrupt( void ){

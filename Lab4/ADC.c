@@ -14,7 +14,7 @@ void initADC1(){
     AD1CON1bits.SSRC = 7; // Auto-convert mode
     AD1CON1bits.ASAM = 1; // Auto-sampling
     AD1CON2bits.VCFG = 0; // Use board reference voltages
-    AD1CON2bits.CSCNA = 0; // Disable scanning
+    AD1CON2bits.CSCNA = 1; // Disable scanning
     AD1CON2bits.SMPI = 15; // 15 samples
     AD1CON2bits.ALTS = 0; // Only Mux A
     AD1CON3bits.ADRC = 0; // Use PBCLK
@@ -26,6 +26,7 @@ void initADC1(){
     IEC0bits.AD1IE = 1;
     IPC5bits.AD1IP = 7;
     AD1CON1bits.ADON = 1; // turn on the ADC
+    AD1CSSLbits.CSSL0 = 1;
 }
 
 /////////////
@@ -38,7 +39,7 @@ void initADC2(){
     AD1CON1bits.SSRC = 7; // Auto-convert mode
     AD1CON1bits.ASAM = 1; // Auto-sampling
     AD1CON2bits.VCFG = 0; // Use board reference voltages
-    AD1CON2bits.CSCNA = 0; // Disable scanning
+    AD1CON2bits.CSCNA = 1; // Disable scanning
     AD1CON2bits.SMPI = 15; // 15 samples
     AD1CON2bits.ALTS = 0; // Only Mux A
     AD1CON3bits.ADRC = 0; // Use PBCLK
@@ -50,6 +51,7 @@ void initADC2(){
     IEC0bits.AD1IE = 1;
     IPC5bits.AD1IP = 7;
     AD1CON1bits.ADON = 1; // turn on the ADC
+    AD1CSSLbits.CSSL1 = 1;
 }
 
 
@@ -63,7 +65,7 @@ void initADC3(){
     AD1CON1bits.SSRC = 7; // Auto-convert mode
     AD1CON1bits.ASAM = 1; // Auto-sampling
     AD1CON2bits.VCFG = 0; // Use board reference voltages
-    AD1CON2bits.CSCNA = 0; // Disable scanning
+    AD1CON2bits.CSCNA = 1; // Disable scanning
     AD1CON2bits.SMPI = 15; // 15 samples
     AD1CON2bits.ALTS = 0; // Only Mux A
     AD1CON3bits.ADRC = 0; // Use PBCLK
@@ -75,6 +77,7 @@ void initADC3(){
     IEC0bits.AD1IE = 1;
     IPC5bits.AD1IP = 7;
     AD1CON1bits.ADON = 1; // turn on the ADC
+    AD1CSSLbits.CSSL2 = 1;
 }
 
 
@@ -87,7 +90,7 @@ void initADC4(){
     AD1CON1bits.SSRC = 7; // Auto-convert mode
     AD1CON1bits.ASAM = 1; // Auto-sampling
     AD1CON2bits.VCFG = 0; // Use board reference voltages
-    AD1CON2bits.CSCNA = 0; // Disable scanning
+    AD1CON2bits.CSCNA = 1; // Disable scanning
     AD1CON2bits.SMPI = 15; // 15 samples
     AD1CON2bits.ALTS = 0; // Only Mux A
     AD1CON3bits.ADRC = 0; // Use PBCLK
@@ -99,4 +102,5 @@ void initADC4(){
     IEC0bits.AD1IE = 1;
     IPC5bits.AD1IP = 7;
     AD1CON1bits.ADON = 1; // turn on the ADC
+    AD1CSSLbits.CSSL3 = 1;
 }
