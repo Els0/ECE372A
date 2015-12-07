@@ -1,4 +1,4 @@
-/* 
+ /* 
  * File:   pwm.c
  * Author: TEAM 206
  *
@@ -55,6 +55,12 @@ void ToggleMode(int CurrentState){
             In2 = OUTPUT;
             In3 = OUTPUT;
             In4 = OUTPUT;
+            
+            LATDbits.LATD1 = 0;
+            LATDbits.LATD5 = 0;
+            LATDbits.LATD3 = 0;
+            LATDbits.LATD11 = 0;
+            
             //Motor 1
             RPD5Rbits.RPD5R = 0b0000;
             RPD1Rbits.RPD1R = 0b1011;
@@ -69,6 +75,12 @@ void ToggleMode(int CurrentState){
             In2 = OUTPUT;
             In3 = OUTPUT;
             In4 = OUTPUT;
+            
+            LATDbits.LATD1 = 0;
+            LATDbits.LATD5 = 0;
+            LATDbits.LATD3 = 0;
+            LATDbits.LATD11 = 0;
+            
             //Motor 1
             RPD1Rbits.RPD1R = 0b0000;
             RPD5Rbits.RPD5R = 0b1011;
@@ -77,27 +89,39 @@ void ToggleMode(int CurrentState){
             RPD11Rbits.RPD11R = 0b1011;
             break;
             
-            case 4: //Turn_Right
-            In1 = OUTPUT;
-            In2 = OUTPUT;
-            In3 = OUTPUT;
-            In4 = OUTPUT;
+            case 4: //Turn_Left
+            In1 = OUTPUT; 
+            In2 = OUTPUT; 
+            In3 = OUTPUT; 
+            In4 = OUTPUT; 
+            
+            LATDbits.LATD1 = 0;
+            LATDbits.LATD5 = 0;
+            LATDbits.LATD3 = 0;
+            LATDbits.LATD11 = 0;
+            
             //Motor 1
             RPD5Rbits.RPD5R = 0b0000;
             RPD1Rbits.RPD1R = 0b1011;
             //Motor 2
             RPD3Rbits.RPD3R = 0b0000;
-            RPD11Rbits.RPD11R = 0b1011;
+            RPD11Rbits.RPD11R = 0b0000;
             break;
             
-            case 5: //Turn_Left
+            case 5: //Turn_Right
             In1 = OUTPUT;
             In2 = OUTPUT;
             In3 = OUTPUT;
             In4 = OUTPUT;
+            
+            LATDbits.LATD1 = 0;
+            LATDbits.LATD5 = 0;
+            LATDbits.LATD3 = 0;
+            LATDbits.LATD11 = 0;
+            
             //Motor 1
             RPD1Rbits.RPD1R = 0b0000;
-            RPD5Rbits.RPD5R = 0b1011;
+            RPD5Rbits.RPD5R = 0b0000;
             //Motor 2
             RPD11Rbits.RPD11R = 0b0000;
             RPD3Rbits.RPD3R = 0b1011;

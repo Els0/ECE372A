@@ -49,3 +49,15 @@ void initTimer2(){
     T2CONbits.TCS = S_OFF;      //Setting the oscillator
     T2CONbits.ON = S_ON;       //Turn timer on
 }
+
+//Timer used by the ultrasonic sensor
+void initTimer4() {
+    TMR4 = S_CLR;               //Clear TMR1
+    PR4 =  65000; 
+    T4CONbits.TCKPS = 7;        //Init pre-scaler 1
+    T4CONbits.TCS = 0;          //Setting the oscillator
+    IFS0bits.T4IF = S_OFF;      //Put the flag down
+    //IEC0bits.T4IE = S_ON;       //Enables the interrupt
+    //IPC4bits.T4IP = 7;          //Configure interrupt priority
+    T4CONbits.ON = S_OFF;       //Turn timer off
+}

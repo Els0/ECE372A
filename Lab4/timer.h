@@ -16,6 +16,8 @@ void delayUs2(unsigned int delay);
 void initTimer1();
 void delayUs(unsigned int delay);
 
+//Timer 4 will be used for the ultrasonic sensor
+void initTimer4(); 
 
 
 #endif	/* INITTIMER_H */

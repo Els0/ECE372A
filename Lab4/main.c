@@ -19,10 +19,10 @@
 #define DISABLED  0
 
 typedef enum stateTypeEnum {
-    Forward, Idle, Turn_Left, Turn_Right, Turn_Left2, Turn_Right2, Ramp_Down, Ramp_Up,  Finish, WaitPress, DebouncePress, DebounceRelease, WaitRelease
+    Forward, Idle, Sensor, Turn_Left, Turn_Right, Turn_Left2, Turn_Right2, Ramp_Down, Ramp_Up,  Finish, WaitPress, DebouncePress, DebounceRelease, WaitRelease
 } stateType;
 
-volatile stateType state = Turn_Right;
+volatile stateType state = Sensor;
 unsigned int dummyVariable = 0;
 unsigned int dummyVariable2 = 0;
 int S0=0;
@@ -30,23 +30,25 @@ int S1=0;
 int S2=0;
 int S3=0;
 int i=0;
+int x=0;
+int y=0;
 
 
 int main(void){
     SYSTEMConfigPerformance(40000000);
     initTimer1();
     initTimer2();
-    initPWM();
-    initPWM2();
+    initTimer4(); 
+    //initPWM();
+    //initPWM2();
     initSW();
     enableInterrupts();
-    //initLCD();
-    //clearLCD();
     initHBridgeInputs();
-    initADC1();   
-    initADC2();   
-    initADC3();   
-    initADC4();   
+    //initADC1();   
+    //initADC2();   
+    //initADC3();   
+    //initADC4();   
+    InitSensor();
     
     while (1) {
               
@@ -78,6 +80,12 @@ int main(void){
                 AD1CON1bits.ADON = 1;
                 break;
 
+                
+            case Sensor:
+                ReadSensor();
+                //AD1CON1bits.ADON = 1;
+                break;
+                
             case Turn_Left2:
                 i=0;
                 ToggleMode(4);
@@ -115,57 +123,62 @@ int main(void){
 }
 
 
-void __ISR(_ADC_VECTOR, IPL7SRS) _ADCInterrupt(void){
+/*void __ISR(_ADC_VECTOR, IPL7SRS) _ADCInterrupt(void){
     //Turns the flag down
     IFS0bits.AD1IF = 0;   
     
-    //Buffer from Sensor 0 mayor de .600v
-    if (ADC1BUF0<=150) {S0=1;} 
+    //Buffer from Sensor 0 mayor de .600v 126-220, dentro fuera
+    if (ADC1BUF0<=170) {S0=1;} 
     else {S0=0;}
      
-    //Buffer from Sensor 1 mayor de .300
-    if (ADC1BUF1<=100) {S1=1;} 
+    //Buffer from Sensor 1 mayor de .300 180-220, dentro fuera
+    if (ADC1BUF1<=200) {S1=1;} 
     else {S1=0;}
     
-    //Buffer from Sensor 2 mayor de .800
-    if (ADC1BUF2<=200) {S2=1;} 
+    //Buffer from Sensor 2 mayor de .800, 150-270 dentro fuera
+    if (ADC1BUF2<=210) {S2=1;} 
     else {S2=0;}
     
-    //Buffer from Sensor 3 mayor de .600
-    if (ADC1BUF3<=200) {S3=1;} 
+    //Buffer from Sensor 3 mayor de .600, 60-220 dentro fuera
+    if (ADC1BUF3<=140) {S3=1;} 
     else {S3=0;}
     
-    //State Selector
-    if ((S0==0)&&(S1==1)&&(S2==1)&&(S3==0)){state=Forward;}
-    else
-       if ((S0==1)&&(S1==1)&&(S2==1)&&(S3==1)){state=Forward;} 
-       else
-           if ((S0==1)&&(S1==1)&&(S2==0)&&(S3==0)){state=Turn_Left;}
-           else
-               if ((S0==1)&&(S1==0)&&(S2==0)&&(S3==0)){state=Turn_Left;}
-               else
-                   if ((S0==0)&&(S1==1)&&(S2==0)&&(S3==0)){state=Turn_Left;}
-                   else
-                       if ((S0==0)&&(S1==1)&&(S2==1)&&(S3==1)){state=Turn_Right;}
-                       else
-                           if ((S0==0)&&(S1==0)&&(S2==0)&&(S3==1)){state=Turn_Right;}
-                             else
-                                if ((S0==0)&&(S1==0)&&(S2==1)&&(S3==0)){state=Turn_Right;}
-                                     else
-                                        if ((S0==0)&&(S1==0)&&(S2==0)&&(S3==0)){state=Turn_Right;}
-                                else state=Forward;
     
-      
-    OC4RS = 800;
-    OC2RS = 800;
+    
+    
+    
+     //State Selector
+    if ((S1==1)&&(S2==1)){
+        state=Forward;
+        OC4RS = 800;
+        OC2RS = 800;}
+    else
+    if (S3==1){
+       state=Turn_Right;
+       OC4RS = 800;
+       OC2RS = 800;} 
+    else
+    if (S0==1){
+        state=Turn_Left;
+        OC4RS = 800;
+        OC2RS = 800;}
+   
+        
+    
+    
+    //Erase this 
+    //OC4RS = 800;
+    //OC2RS = 800;
+    //End Erase this
+    
     //Assign the correct values for the motor to work to the OCxRS variables.
     //OC2RS = ADC1BUF0+400;
     //if(ADC1BUF0 < 512) {OC4RS = 1023;}
     //else {OC4RS = ((-1023+ADC1BUF0)*(-1))+(400);}
 
     AD1CON1bits.ADON = 0;               //Turns off the ADC.
-    //for (i = 0; i < 100; i++) delayUs(1000);
-}
+    //for (i = 0; i < 1000; i++) delayUs(1000);
+}*/
 
 void __ISR(_CHANGE_NOTICE_VECTOR, IPL7SRS) _CNInterrupt( void ){
       dummyVariable = PORTDbits.RD6;
@@ -179,3 +192,4 @@ void __ISR(_CHANGE_NOTICE_VECTOR, IPL7SRS) _CNInterrupt( void ){
      IFS1bits.CNDIF = 0;
          
 }
+
